@@ -1,20 +1,25 @@
 package com.brillio.SpringbootWebMonitoringAPIService.service;
 
 import com.brillio.SpringbootWebMonitoringAPIService.model.Website;
-import com.brillio.SpringbootWebMonitoringAPIService.model.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface WebCheckService {
 
-    List<Website> getAllWebsites(String username);
+
+
+    Optional<Website> getAllWebsites(int user_id);
 
     Website addWebsiteCheck(Website website);
 
-//    void updateWebsite(Website website);
-//
-//    void deleteWebsite(String websiteName);
+      Website deleteWebsiteByName(Website website);
 
+    public Website getByWebsiteId(int websiteId);
+
+    public Website updateByMonitoringDetails(Website website);
+
+
+//    User getByUserId(int userId);
 }
