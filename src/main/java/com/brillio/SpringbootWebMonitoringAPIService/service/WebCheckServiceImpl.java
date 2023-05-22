@@ -1,10 +1,15 @@
 package com.brillio.SpringbootWebMonitoringAPIService.service;
 
+import com.brillio.SpringbootWebMonitoringAPIService.model.User;
 import com.brillio.SpringbootWebMonitoringAPIService.model.Website;
 import com.brillio.SpringbootWebMonitoringAPIService.repository.WebCheckRepository;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,36 +18,33 @@ public class WebCheckServiceImpl implements WebCheckService{
     @Autowired
     private WebCheckRepository webCheckRepository;
 
-//    @Autowired
-//    private UserRepository userRepository;
-
-
-//    public WebCheckServiceImpl(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-
     public WebCheckServiceImpl(WebCheckRepository webCheckRepository) {
         this.webCheckRepository = webCheckRepository;
     }
 
 
 
-  @Override
-  public Optional<Website> getAllWebsites(int user_id) {
 
-      Optional<Website> websiteList = webCheckRepository.findById(user_id);
+ /* public List<Website> getByUserId(String user_id) {
+
+      List<Website> websiteList = webCheckRepository.findByUserId(user_id);
       return websiteList;
+  }*/
+      public List<Website> getAllTheWebsites() {
+          List<Website> websiteList = webCheckRepository.findAll();
 
-//
-//      List<Website> websiteList = new ArrayList<>();
-//      webCheckRepository.findById(user_id).forEach(websiteList::add);
-//      return websiteList;
-  }
+          webCheckRepository.findAll().forEach(websiteList::add);
+          return websiteList;
+      }
 
-//    public List<Website> getAllWebsites(int user_id){
-//        return webCheckRepository.findDataByUserId(user_id);
-//    }
-
+    public List<Website> getWebsitesByUsername(String username) {
+        //return webCheckRepository.findWebsitesByUsername(username);
+        return webCheckRepository.findByusername(username);
+    }
+//        @Override
+//            public void deleteWebsiteById(int websiteId) {
+//        webCheckRepository.deleteById(websiteId);
+//}
 
 
     @Override
@@ -56,38 +58,53 @@ public class WebCheckServiceImpl implements WebCheckService{
 
         return website;
     }
-    public Website updateByMonitoringDetails(Website website) {
-        Website website1 = webCheckRepository.save(website);
-        return website1;
+
+    //@Override
+    public void deleteWebsiteById(int websiteId) {
+        webCheckRepository.deleteById(websiteId);
     }
 
     @Override
-    public Website getByWebsiteId(int websiteId) {
-        Optional<Website> website = webCheckRepository.findById(websiteId);
-        if (website.isPresent()) {
-            return website.get();
-        } else return null;
+    public List<Website> getByUserId(String user_id) {
+        return null;
     }
+
+
+   // @Override
+//    public Website getByWebsiteId(int websiteId) {
+//        Optional<Website> website = webCheckRepository.findById(websiteId);
+//        if (website.isPresent()) {
+//            return website.get();
+//        } else return null;
+//    }
+
+    //put Mapping
+    public Website updateWebsite(int websiteId, Website updatedWebsite) {
+        Website existingWebsite = webCheckRepository.findById(websiteId).orElse(null);
+
+        if (existingWebsite != null) {
+            existingWebsite.setUrl(updatedWebsite.getUrl());
+            existingWebsite.setMonitoring_frequency(updatedWebsite.getMonitoring_frequency());
+            return webCheckRepository.save(existingWebsite);
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Website> getWebsitesByUserId(int userId) {
+        return null;
+    }
+
+    //get Mapping
+//    @Override
+//    public List<Website> getWebsitesByUserId(int userId) {
+//        return webCheckRepository.findByUserId(userId);
+//    }
 
 
 }
 
-
-
-
-
-
-//    @Override
-//    public User getByUserId(int user_id) {
-//        User user= webCheckRepository.findById(user_id);
-//        if (user.equals()){
-//            return user.get();
-//        }
-//        else {
-//            return null;
-//        }
-//
-//    }
 
 
 

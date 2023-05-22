@@ -2,20 +2,19 @@ package com.brillio.SpringbootWebMonitoringAPIService.repository;
 
 import com.brillio.SpringbootWebMonitoringAPIService.model.Website;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface WebCheckRepository extends JpaRepository<Website, Integer> {
-//    @Query("select w from website w where w.user_id=:user_id")
-//    Optional<Website> findByUserId(@Param("user_id") int user_id);
-
-//    List<Website> findByUserID(Optional<User> user);
+    List<Website> findByusername(String username);
 
 
+    // @Query("SELECT w FROM Website w INNER JOIN User u ON u.username = w.username WHERE u.username = :username")
+    //List<Website> findWebsitesByUsername(String username);
 
-
-//    @Query("select w from website w where w.user_id=:user_id")
-//   List<Website> findDataByUserId(int user_id);
 }
 
 
