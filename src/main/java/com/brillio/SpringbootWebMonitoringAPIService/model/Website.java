@@ -21,14 +21,7 @@ public class Website {
     private String url;
     private int monitoring_frequency;
     private String status;
-
-
-//    @ManyToOne
-//    @JoinColumn(name="user_id")
-//    private User user_id;
-
-    private int user_id;
-    private LocalDateTime last_checked_in;
+    private String username;
 
 
 //    public Website(String url, String google) {
